@@ -1,0 +1,127 @@
+
+.header {
+/* Dark header for KW branding, dark grey looks better than black though, no matter the rules */
+  background-color: #222;
+  border-bottom: solid 2px #92D400;
+/* set z-order to 0 otherwise datepickers appear behind header */
+  /*z-index: 0;*/
+/* setting height otherwise it collapses when removing the menus from the unify template header */
+  height: 82px;
+}
+
+/* Lighten the font colour of the nav bar list items as the header is dark */
+.header .navbar-nav > li > a {
+  color: #999;
+}
+/* Shift the logo slightly */
+.header .logo img {
+  margin: 10px 0;
+}
+
+/* Handle button design on the page */
+input[type="button"] {
+  outline: none;
+  background: none;
+  border: 0px;
+  color: #888;
+  font-size: 15px;
+  font-weight: bold;
+  width: 20px;
+  margin: 0 0 10px;
+  font-family: Lato, sans-serif;
+  cursor: pointer;
+  -webkit-transition: color .5s;
+  transition: color .5s;
+}
+/* Set the hover colours of the add & delete buttons */
+input[type="button"].add_new:hover {
+  color: #92D400;
+}
+input[type="button"].delete_new:hover {
+  color: #FF2200;
+}
+
+#date_err_msg {
+  display: none;
+}
+
+a.logo img {
+  margin-top: -20px;
+}
+
+.fixed_footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+/*.footer-v1 {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}*/
+
+/* Dropdowns on view_updates.php */
+.sky-form {
+  border: none;
+}
+.sky-form label.sel_review {
+  margin: 0;
+}
+
+.sky-form label.sel_review > select {
+  padding: 3px 10px;
+}
+
+.list-group .list-group-item:hover {
+  background-color: #dadada;
+  /*color: #92D400;*/
+  cursor: pointer;
+}
+
+div.sider {
+  display: inline-block;
+}
+
+.tag-box p {
+  display: inline-block;
+}
+
+
+
+/* TESTING */
+div.test-box {
+  border: 1px solid #92D400;
+  display: table;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+div.test-box div.test-sider, div.test-box div.test-main {
+  display: table-cell;
+  /*vertical-align: middle;*/
+}
+
+div.test-box div.test-sider {
+  background-color: #92D400;
+  height: 100%;
+  margin: 0;
+  padding: 10px 6px;
+  color: #fff;
+  width: 4%;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+div.test-box div.test-sider i {
+  vertical-align: middle;
+}
+
+div.test-box div.test-main {
+  padding: 5px 10px 10px;
+  height: 100%;
+  width: 96%;
+  margin: 0;
+}

@@ -1,0 +1,6 @@
+Team updates website
+
+A simple site of just two pages which allows team members to add details of their week/fortnight/month activities under set headings. The second page allows team managers to review updates filtered and ordered by team member or activity as well as date.
+
+Site is written in PHP, html, CSS & JavaScript.
+

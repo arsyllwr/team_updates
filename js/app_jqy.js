@@ -1,4 +1,6 @@
 
+
+
 function footerHeight() {
   $('.footer-v1').css({'opacity':1});
   var bodyHeight = $('body').height();
@@ -19,4 +21,26 @@ $(window).resize(function () {
 
 $(document).ready(function () {
   footerHeight();
+  changeSidebarList();
 });
+
+
+/*
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++ functions for view_updates.php
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+*/
+
+function changeSidebarList() {
+// respond to user changing the switch value. Use ajax 
+  $('#chbSideList').change(function(){
+    console.log(this.checked);
+    $.ajax({
+      method: "GET",
+      url: "displaySidebarList.php",
+      success: function (output) {
+        $('.list-group').html = output;
+      }
+    });
+  });
+}

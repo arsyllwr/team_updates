@@ -22,13 +22,13 @@ if ($user->PDUser=='No') {
 
 // set page title and include separate header file
 $title = "service design & development";
-$subtitle = "weekly updates";
+$subtitle = "team updates";
 include "header.php";
 
 // keep the textareas to 1 line when not in focus
-$rowsInTextArea = 1;
+//$rowsInTextArea = 1;
 // get the list of update types from the database table
-$updateTypeQuery = mssql_query('SELECT UpdateType FROM ddUpdateType;');
+//$updateTypeQuery = mssql_query('SELECT UpdateType FROM tuUpdateType;');
 
 ?>
 
@@ -41,3 +41,44 @@ $updateTypeQuery = mssql_query('SELECT UpdateType FROM ddUpdateType;');
 
 <!-- :::::::::::::::::: Include a separate footer file ::::::::::::::::::::: -->
 <?php include "footer.php"; ?>
+
+
+</div><!-- /class="wrapper" -->
+
+    <!-- JS Global Compulsory -->     
+    <script type="text/javascript" src="assets/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/jquery/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- JS Implementing Plugins -->
+    <script type="text/javascript" src="assets/plugins/back-to-top.js"></script>
+    <script type="text/javascript" src="assets/plugins/smoothScroll.js"></script>
+    <script src="assets/plugins/sky-forms-pro/skyforms/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/masonry/jquery.masonry.min.js"></script>
+    <script type="text/javascript" src="plugins/autosize.js"></script>
+
+    <!-- JS Customization -->
+    <script type="text/javascript" src="assets/js/custom.js"></script>
+    <!-- JS Page Level -->
+    <script type="text/javascript" src="assets/js/app.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/datepicker.js"></script>
+    <script type="text/javascript" src="assets/js/pages/blog-masonry.js"></script>
+    
+    <!-- JS user customisations -->
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/app_jqy.js"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            App.init();
+            Datepicker.initDatepicker();
+            autosize($('textarea'));
+        });
+    </script>
+<!--[if lt IE 9]>
+    <script src="assets/plugins/respond.js"></script>
+    <script src="assets/plugins/html5shiv.js"></script>
+    <script src="assets/plugins/placeholder-IE-fixes.js"></script>
+<![endif]-->
+
+</body>
+</html>

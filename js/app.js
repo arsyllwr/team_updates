@@ -1,5 +1,11 @@
 // When user clicks '+' button add a new textarea/input element containing the text in the existing text area.
-// Add the new textarea/input immediately before 
+// Give focus to the new textarea immediately after it's created.
+
+/*
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++ functions for new_update.php
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+*/
 
 // create an array of all the '+' buttons
 var addButtons = document.getElementsByClassName("add_new");
@@ -10,8 +16,9 @@ var createNewUpdateElement = function (updateString) {
   var containerLabel = document.createElement("label");
   var textArea = document.createElement("textarea");
 // Add relevant attribute details
-  containerLabel.className = "textarea textarea-expandable";
-  textArea.setAttribute("rows", "3");
+  containerLabel.className = "textarea";
+  textArea.setAttribute("rows", "1");
+  autosize(textArea);
 // Get the name of the textArea as this will be used to form the name & id of the new textarea(s).
 // Not the prettiest code but we know the original textarea will always be in this position
   var textAreaName = this.parentNode.firstChild.nextSibling.nextSibling.firstChild.id + this.parentNode.firstChild.innerText;
@@ -88,10 +95,12 @@ function ValidateForm () {
       error_message = "That's ancient history, no use raking over old ground";
     } else if (dateVal.getDay() != 1) {
       valid = false;
-      error_message = "Weeks begin on a Monday around here, chump";
+      error_message = "Weeks begin on a Monday around here, Joe";
     }
   }   // end if (dateStr == "") {
   
+  var date_err_msg = document.getElementById("date_err_msg");
+  var date_pick = document.getElementsByName("date");
   if (error_message != "") {
   // log the message
     console.log(error_message);
@@ -109,13 +118,17 @@ function ValidateForm () {
 
 
   // add the relevant class to the date input
-    var date_pick = document.getElementsByName("date");
     date_pick[0].parentNode.className += " state-error";
     date_pick[0].className += " invalid";
   // show the error message
-    var date_err_msg = document.getElementById("date_err_msg");
     date_err_msg.innerText = error_message;
     date_err_msg.style.display = "block";
+  } else {
+  // clear any error classes from the date picker 
+    date_pick[0].parentNode.classList.remove("state-error");
+    date_pick[0].classList.remove("invalid");
+  // hide the error message
+    date_err_msg.style.display = "none";
   }
 
   return valid;
@@ -125,3 +138,18 @@ function ValidateForm () {
 for (var i=0; i<addButtons.length; i++) {
   addButtons[i].onclick = createNewUpdateElement;
 }
+
+// validate date entry on change
+var date_picker = document.getElementById("date");
+date_picker.onchange = ValidateForm;
+
+
+/*
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++ functions for view_updates.php
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+*/
+
+
+
+

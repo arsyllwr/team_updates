@@ -1,5 +1,10 @@
 <?php
 
+// TO DO:
+//   - include code to change size of text area automatically based on input
+//   - potentially pull a list of active projects from Rehan's project tracker and allow user to select
+//   -
+
 // Connect to the Powerview database
 include $_SERVER['DOCUMENT_ROOT'] . '/common/mod_database.php';
 connect_PVDB();
@@ -76,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 */
 
 $rowsInTextArea = 1;
-$updateTypeQuery = mssql_query('SELECT UpdateType FROM ddUpdateType;');
+$updateTypeQuery = mssql_query('SELECT UpdateType FROM tuUpdateType;');
 
 ?>
 
@@ -106,8 +111,8 @@ $updateTypeQuery = mssql_query('SELECT UpdateType FROM ddUpdateType;');
       echo '<div class="col col-11">';
       echo '<label class="counter" style="display: none;">1</label>';
       echo '<label class="label" for="' . $updateTypeArr[0] . '">' . $updateTypeArr[0] . '</label>';
-      echo '<label class="textarea textarea-expandable">';
-      echo '<textarea rows="3" id="' . $updateTypeArr[0] . '" name="' . $updateTypeArr[0] . '"></textarea>';
+      echo '<label class="textarea">';
+      echo '<textarea rows="1" id="' . $updateTypeArr[0] . '" name="' . $updateTypeArr[0] . '"></textarea>';
       echo "</label>";
       echo '<input type="button" class="add_new" value="+">';
       echo '<input type="button" value="-">';
@@ -126,5 +131,49 @@ $updateTypeQuery = mssql_query('SELECT UpdateType FROM ddUpdateType;');
   </form>
 </div>
 
+</div>
+    <!--=== End Content ===-->
+
 <!-- :::::::::::::::::: Include separate footer file ::::::::::::::::::::: -->
 <?php include "footer.php"; ?>
+
+
+</div><!-- /class="wrapper" -->
+
+    <!-- JS Global Compulsory -->     
+    <script type="text/javascript" src="assets/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/jquery/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- JS Implementing Plugins -->
+    <script type="text/javascript" src="assets/plugins/back-to-top.js"></script>
+    <script type="text/javascript" src="assets/plugins/smoothScroll.js"></script>
+    <script src="assets/plugins/sky-forms-pro/skyforms/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/masonry/jquery.masonry.min.js"></script>
+    <script type="text/javascript" src="plugins/autosize.js"></script>
+
+    <!-- JS Customization -->
+    <script type="text/javascript" src="assets/js/custom.js"></script>
+    <!-- JS Page Level -->
+    <script type="text/javascript" src="assets/js/app.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/datepicker.js"></script>
+    <script type="text/javascript" src="assets/js/pages/blog-masonry.js"></script>
+    
+    <!-- JS user customisations -->
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/app_jqy.js"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            App.init();
+            Datepicker.initDatepicker();
+            autosize($('textarea'));
+        });
+    </script>
+<!--[if lt IE 9]>
+    <script src="assets/plugins/respond.js"></script>
+    <script src="assets/plugins/html5shiv.js"></script>
+    <script src="assets/plugins/placeholder-IE-fixes.js"></script>
+<![endif]-->
+
+</body>
+</html>

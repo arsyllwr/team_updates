@@ -89,6 +89,14 @@ div.sider {
   display: inline-block;
 }
 
+/* Code to hide the 'ON' & 'OFF' text that normally appears on the switch */
+.sky-form .toggle input:checked + i:after {
+    content: '';
+}
+
+.sky-form .toggle input + i:after {
+    content: '';
+}
 
 
 /* TESTING */

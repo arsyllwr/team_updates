@@ -104,7 +104,7 @@ foreach ($_POST as $key => $value) {
     //if ($error_message == "") {
       if ($value != "") {
       // sql query to insert data. Can either build one big string or execute it multiple times. Not sure on trade-off
-        $query_text = 'INSERT INTO ddWeeklyUpdates (UserId, MeetingDate, UpdateTypeId, Details, TimeStamp) SELECT ' . $_POST['userid'] . ', "' . preg_replace("/(\d+)\.(\d+)\.(\d+)/", "$3-$2-$1", $_POST['date']) . '", (SELECT UpdateTypeId FROM ddUpdateType WHERE UpdateType ="' . preg_replace($patterns, $replacements, $key) . '"), "' . trim($value) . '", CURRENT_TIMESTAMP;';
+        $query_text = 'INSERT INTO tuWeeklyUpdates (UserId, MeetingDate, UpdateTypeId, Details, TimeStamp) SELECT ' . $_POST['userid'] . ', "' . preg_replace("/(\d+)\.(\d+)\.(\d+)/", "$3-$2-$1", $_POST['date']) . '", (SELECT UpdateTypeId FROM tuUpdateType WHERE UpdateType ="' . preg_replace($patterns, $replacements, $key) . '"), "' . trim($value) . '", CURRENT_TIMESTAMP;';
         mssql_query($query_text);
       // echo to page too
         echo '<div>';

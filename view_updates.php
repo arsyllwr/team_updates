@@ -1,15 +1,11 @@
 <?php
 
+// TO DO:
+//   - function to display sidebar list of users or update types
+//   - function to display update list
+
+
 /* Functions here, code begins further down the page */
-function display_sidebar_list($list) {
-// function to build the sidebar list of users, update types or dates
-  while ($list_arr = mssql_fetch_array($list)) {
-    // only show users that have updates against them
-    if ($list_arr[1] > 0) {
-      echo '<li class="list-group-item">' . $list_arr[0] . '<span class="badge rounded-2x badge-u pull-right">' . $list_arr[1] . '</span></li>';
-    }
-  }   //end while
-}
 
 function display_update_list($update_list) {
 // function takes an array of updates, determined elsewhere and displays them on screen
@@ -17,7 +13,6 @@ function display_update_list($update_list) {
     echo '';
   }
 }
-
 
 // Connect to the Powerview database
 include $_SERVER['DOCUMENT_ROOT'] . '/common/mod_database.php';
@@ -43,38 +38,21 @@ $title = "service design & development";
 $subtitle = "review updates";
 include "header.php";
 
-// temporary variable for testing
-$show_team = false;
-
-// start off with team members
-$team_query = "SELECT RegisteredUsers.FirstName + ' ' + RegisteredUsers.LastName AS FullName, COUNT(ddWeeklyUpdates.UserId) AS NumInstances
-               FROM ddWeeklyUpdates RIGHT OUTER JOIN
-               RegisteredUsers ON ddWeeklyUpdates.UserId = RegisteredUsers.UserId
-               WHERE (RegisteredUsers.TeamId = 66) AND (RegisteredUsers.StatusId = 1)
-               GROUP BY RegisteredUsers.LastName, RegisteredUsers.FirstName";
-$team_names = mssql_query($team_query);
-
-// will also need the list of update types, and the count of types in the weekly updates table
-$update_type_query = "SELECT ddUpdateType.UpdateType, COUNT(ddWeeklyUpdates.UpdateTypeId) AS NumOccurences 
-                      FROM ddWeeklyUpdates INNER JOIN 
-                      ddUpdateType ON ddWeeklyUpdates.UpdateTypeId = ddUpdateType.UpdateTypeId 
-                      GROUP BY ddUpdateType.UpdateType";
-$update_types = mssql_query($update_type_query);
 
 // Other queries required:
 //   - 
-$query = "SELECT RegisteredUsers.FirstName + ' ' + RegisteredUsers.LastName AS FullName, ddUpdateType.UpdateType, ddWeeklyUpdates.MeetingDate, ddWeeklyUpdates.Details, ddWeeklyUpdates.TimeStamp
-          FROM ddWeeklyUpdates INNER JOIN
-          RegisteredUsers ON ddWeeklyUpdates.UserId = RegisteredUsers.UserId INNER JOIN
+$query = "SELECT RegisteredUsers.FirstName + ' ' + RegisteredUsers.LastName AS FullName, tuUpdateType.UpdateType, tuWeeklyUpdates.MeetingDate, tuWeeklyUpdates.Details, tuWeeklyUpdates.TimeStamp
+          FROM tuWeeklyUpdates INNER JOIN
+          RegisteredUsers ON tuWeeklyUpdates.UserId = RegisteredUsers.UserId INNER JOIN
           upTeam ON RegisteredUsers.TeamId = upTeam.TeamId INNER JOIN
-          ddUpdateType ON ddWeeklyUpdates.UpdateTypeId = ddUpdateType.UpdateTypeId
-          WHERE (ddWeeklyUpdates.UpdateTypeId = 1) AND (RegisteredUsers.TeamId = 66)";
+          tuUpdateType ON tuWeeklyUpdates.UpdateTypeId = tuUpdateType.UpdateTypeId
+          WHERE (tuWeeklyUpdates.UpdateTypeId = 1) AND (RegisteredUsers.TeamId = 66)";
 
 // Get the list of meeting dates from the table for filtering. Sort doesn;t work properly if converting date format in SQL so may need do it in PHP
 // 3rd query below includes MeetingDate twice and sorts by that before conversion. This now works, just ignore the second column when using in code
-$dateListQuery1 = "SELECT DISTINCT MeetingDate FROM ddWeeklyUpdates ORDER BY MeetingDate";
-$dateListQuery2 = "SELECT DISTINCT CONVERT(VARCHAR(10), MeetingDate, 104) AS DistinctDate FROM ddWeeklyUpdates";
-$dateListQuery3 = "SELECT DISTINCT CONVERT(VARCHAR(10), MeetingDate, 104) AS DistinctDate, MeetingDate FROM ddWeeklyUpdates ORDER BY MeetingDate DESC";
+$dateListQuery1 = "SELECT DISTINCT MeetingDate FROM tuWeeklyUpdates ORDER BY MeetingDate";
+$dateListQuery2 = "SELECT DISTINCT CONVERT(VARCHAR(10), MeetingDate, 104) AS DistinctDate FROM tuWeeklyUpdates";
+$dateListQuery3 = "SELECT DISTINCT CONVERT(VARCHAR(10), MeetingDate, 104) AS DistinctDate, MeetingDate FROM tuWeeklyUpdates ORDER BY MeetingDate DESC";
 
 include('../kw_palette.php');
 
@@ -88,14 +66,22 @@ include('../kw_palette.php');
     - By default display all sidebar list entries but give user remove and re-add options
     - show number of entries in sidebar list and make the icon clickable to remove from or add back to display
  -->
+
+        <div class="row">
+          <form action="#" class="sky-form">
+            <section class="col col-8">
+              <label class="toggle"><input type="checkbox" name="checkbox-toggle" id="chbSideList"><i class="rounded-4x"></i>Update Type</label>
+            </section>
+            <section class="col col-4"><label class="toggle">Member</label></section>
+          </form>
+        </div>
+
         <ul class="list-group">
 <?php
-if ($show_team) {
-  $list = $team_names;
-} else {
-  $list = $update_types;
-}
-display_sidebar_list($list);
+
+include 'display_sidebar_list.php';
+display_sidebar_list($query);
+
 ?>
         </ul>
       </div>
@@ -213,5 +199,50 @@ endif;
     </div><!-- End class="row" -->
 
 
+</div>
+    <!--=== End Content ===-->
+
+
 <!-- :::::::::::::::::: Include separate footer file ::::::::::::::::::::: -->
 <?php include "footer.php"; ?>
+
+
+</div><!-- /class="wrapper" -->
+
+    <!-- JS Global Compulsory -->     
+    <script type="text/javascript" src="assets/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/jquery/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- JS Implementing Plugins -->
+    <script type="text/javascript" src="assets/plugins/back-to-top.js"></script>
+    <script type="text/javascript" src="assets/plugins/smoothScroll.js"></script>
+    <script src="assets/plugins/sky-forms-pro/skyforms/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/masonry/jquery.masonry.min.js"></script>
+    <script type="text/javascript" src="plugins/autosize.js"></script>
+
+    <!-- JS Customization -->
+    <script type="text/javascript" src="assets/js/custom.js"></script>
+    <!-- JS Page Level -->
+    <script type="text/javascript" src="assets/js/app.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/datepicker.js"></script>
+    <script type="text/javascript" src="assets/js/pages/blog-masonry.js"></script>
+    
+    <!-- JS user customisations -->
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/app_jqy.js"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            App.init();
+            Datepicker.initDatepicker();
+            autosize($('textarea'));
+        });
+    </script>
+<!--[if lt IE 9]>
+    <script src="assets/plugins/respond.js"></script>
+    <script src="assets/plugins/html5shiv.js"></script>
+    <script src="assets/plugins/placeholder-IE-fixes.js"></script>
+<![endif]-->
+
+</body>
+</html>
